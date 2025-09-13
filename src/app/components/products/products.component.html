@@ -1,0 +1,83 @@
+<div class="products-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="container">
+      <h1>Productos</h1>
+      <p>Descubre nuestra amplia selección de productos</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <div class="search-filter">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Buscar productos...</mat-label>
+          <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="filter-controls">
+        <mat-form-field appearance="outline">
+          <mat-label>Categoría</mat-label>
+          <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryChange()">
+            <mat-option *ngFor="let category of categories" [value]="category.value">
+              {{ category.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Ordenar por</mat-label>
+          <mat-select [(ngModel)]="sortBy" (ngModelChange)="onSortChange()">
+            <mat-option *ngFor="let option of sortOptions" [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Results Info -->
+    <div class="results-info">
+      <p>{{ filteredProducts.length }} productos encontrados</p>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid" *ngIf="filteredProducts.length > 0">
+      <mat-card class="product-card" *ngFor="let product of filteredProducts"
+                [routerLink]="['/product', product.id]">
+        <img mat-card-image [src]="product.image" [alt]="product.name" [title]="product.name">
+
+        <mat-card-content>
+          <h3>{{ product.name }}</h3>
+          <p class="description">{{ product.description }}</p>
+
+          <div class="rating">
+            <mat-icon *ngFor="let star of getStars(product.rating)">{{ star }}</mat-icon>
+            <span class="reviews">({{ product.reviews }} reseñas)</span>
+          </div>
+
+          <div class="price">${{ product.price }}</div>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-button color="primary" [routerLink]="['/product', product.id]">
+            Ver detalles
+          </button>
+          <button mat-raised-button color="accent">
+            Agregar al carrito
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <!-- No Results -->
+    <div class="no-results" *ngIf="filteredProducts.length === 0">
+      <mat-icon>search_off</mat-icon>
+      <h3>No se encontraron productos</h3>
+      <p>Intenta ajustar los filtros de búsqueda</p>
+    </div>
+  </div>
+</div>

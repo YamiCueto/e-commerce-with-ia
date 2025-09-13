@@ -1,0 +1,55 @@
+<!-- Hero Section -->
+<div class="hero-section">
+  <div class="hero-content">
+    <h1>Descubre productos increíbles con IA</h1>
+    <p>Encuentra exactamente lo que necesitas con nuestro asistente inteligente</p>
+    <button mat-raised-button color="accent" class="hero-button" routerLink="/products">
+      Explorar productos
+    </button>
+  </div>
+</div>
+
+<!-- Categories Section -->
+<div class="categories-section">
+  <div class="container">
+    <h2>Categorías populares</h2>
+    <div class="categories-grid">
+      <mat-card class="category-card" *ngFor="let category of categories"
+                [routerLink]="['/category', category.id]">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>{{ category.icon }}</mat-icon>
+          <mat-card-title>{{ category.name }}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="category.image" [alt]="category.name">
+        <mat-card-actions align="end">
+          <button mat-button color="primary">Ver productos</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<!-- Featured Products Section -->
+<div class="products-section">
+  <div class="container">
+    <h2>Productos destacados</h2>
+    <div class="products-grid">
+      <mat-card class="product-card" *ngFor="let product of featuredProducts"
+                [routerLink]="['/product', product.id]">
+        <img mat-card-image [src]="product.image" [alt]="product.name">
+        <mat-card-content>
+          <h3>{{ product.name }}</h3>
+          <div class="rating">
+            <mat-icon *ngFor="let star of getStars(product.rating)">{{ star }}</mat-icon>
+            <span class="reviews">({{ product.reviews }} reseñas)</span>
+          </div>
+          <div class="price">${{ product.price }}</div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button color="primary">Ver detalles</button>
+          <button mat-raised-button color="accent">Agregar al carrito</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<div class="product-detail-container" *ngIf="product">
+  <div class="container">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a routerLink="/">Inicio</a>
+      <mat-icon>chevron_right</mat-icon>
+      <a routerLink="/products">Productos</a>
+      <mat-icon>chevron_right</mat-icon>
+      <span>{{ product.name }}</span>
+    </nav>
+
+    <!-- Product Content -->
+    <div class="product-content">
+      <!-- Product Images -->
+      <div class="product-images">
+        <div class="main-image">
+          <img title="product.name" [src]="product.images[selectedImage]" [alt]="product.name" [title]="product.name">
+        </div>
+        <div class="thumbnail-images" *ngIf="product.images.length > 1">
+          <img *ngFor="let image of product.images; let i = index"
+               [src]="image" [alt]="product.name + ' imagen ' + (i + 1)"
+               [title]="product.name + ' imagen ' + (i + 1)"
+               [class.active]="i === selectedImage"
+               (click)="selectImage(i)">
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-info">
+        <h1>{{ product.name }}</h1>
+
+        <div class="rating-section">
+          <div class="rating">
+            <mat-icon *ngFor="let star of getStars(product.rating)">{{ star }}</mat-icon>
+            <span class="rating-text">{{ product.rating }}</span>
+            <span class="reviews">({{ product.reviews }} reseñas)</span>
+          </div>
+        </div>
+
+        <div class="price-section">
+          <span class="price">${{ product.price }}</span>
+          <span class="stock-status" [class.in-stock]="product.inStock" [class.out-of-stock]="!product.inStock">
+            {{ product.inStock ? 'En stock (' + product.stockCount + ' disponibles)' : 'Agotado' }}
+          </span>
+        </div>
+
+        <div class="description">
+          <p>{{ product.description }}</p>
+        </div>
+
+        <!-- Features -->
+        <div class="features-section">
+          <h3>Características principales</h3>
+          <ul class="features-list">
+            <li *ngFor="let feature of product.features">
+              <mat-icon>check_circle</mat-icon>
+              {{ feature }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Purchase Section -->
+        <div class="purchase-section" *ngIf="product.inStock">
+          <div class="quantity-selector">
+            <label>Cantidad:</label>
+            <div class="quantity-controls">
+              <button mat-mini-fab color="primary" (click)="updateQuantity(-1)"
+                      [disabled]="quantity <= 1">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <span class="quantity">{{ quantity }}</span>
+              <button mat-mini-fab color="primary" (click)="updateQuantity(1)"
+                      [disabled]="quantity >= product.stockCount">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button mat-raised-button color="accent" class="add-to-cart-btn" (click)="addToCart()">
+              <mat-icon>shopping_cart</mat-icon>
+              Agregar al carrito
+            </button>
+            <button mat-raised-button color="primary" class="buy-now-btn" (click)="buyNow()">
+              Comprar ahora
+            </button>
+          </div>
+        </div>
+
+        <div class="out-of-stock-message" *ngIf="!product.inStock">
+          <mat-icon>error_outline</mat-icon>
+          <span>Este producto está agotado</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Details Tabs -->
+    <div class="product-tabs">
+      <mat-tab-group>
+        <mat-tab label="Especificaciones">
+          <div class="tab-content">
+            <div class="specifications">
+              <div class="spec-row" *ngFor="let spec of product.specifications | keyvalue">
+                <span class="spec-label">{{ spec.key }}:</span>
+                <span class="spec-value">{{ spec.value }}</span>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Reseñas">
+          <div class="tab-content">
+            <div class="reviews-summary">
+              <h3>Calificación promedio</h3>
+              <div class="rating-display">
+                <span class="rating-number">{{ product.rating }}</span>
+                <div class="rating-stars">
+                  <mat-icon *ngFor="let star of getStars(product.rating)">{{ star }}</mat-icon>
+                </div>
+                <span class="total-reviews">Basado en {{ product.reviews }} reseñas</span>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+
+<!-- Product Not Found -->
+<div class="product-not-found" *ngIf="!product">
+  <div class="container">
+    <div class="not-found-content">
+      <mat-icon>error_outline</mat-icon>
+      <h2>Producto no encontrado</h2>
+      <p>El producto que buscas no existe o ha sido eliminado.</p>
+      <button mat-raised-button color="primary" routerLink="/products">
+        Ver todos los productos
+      </button>
+    </div>
+  </div>
+</div>
