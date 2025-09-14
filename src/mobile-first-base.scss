@@ -1,0 +1,379 @@
+// =====================================================
+// 📱 MOBILE-FIRST BASE STYLES
+// =====================================================
+
+@import 'mobile-first-guide';
+
+// =====================================================
+// 🌐 RESET Y BASE STYLES
+// =====================================================
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px; // Base para rem calculations
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: map-get(map-get($colors, 'gray'), 800);
+  background-color: map-get(map-get($colors, 'gray'), 50);
+
+  @include respond-to('md') {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+// =====================================================
+// 📱 MEJORAS ESPECÍFICAS PARA MÓVIL
+// =====================================================
+
+// Mejores touch targets
+button,
+.btn,
+a[role="button"],
+input[type="button"],
+input[type="submit"] {
+  @include touch-target;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: 2px solid map-get(map-get($colors, 'primary'), 500);
+    outline-offset: 2px;
+  }
+}
+
+// Formularios más amigables en móvil
+input,
+textarea,
+select {
+  font-size: 16px; // Previene zoom en iOS
+  padding: map-get($spacing, 'sm') map-get($spacing, 'md');
+  border: 1px solid map-get(map-get($colors, 'gray'), 300);
+  border-radius: 6px;
+  transition: border-color 0.2s;
+
+  @include respond-to('md') {
+    font-size: 1rem;
+    padding: map-get($spacing, 'md') map-get($spacing, 'lg');
+    border-radius: 8px;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: map-get(map-get($colors, 'primary'), 500);
+    box-shadow: 0 0 0 2px rgba(map-get(map-get($colors, 'primary'), 500), 0.1);
+  }
+}
+
+// Imágenes responsivas por defecto
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// =====================================================
+// 🎨 COMPONENTES GLOBALES MOBILE-FIRST
+// =====================================================
+
+// Header principal
+.main-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+  border-bottom: 1px solid map-get(map-get($colors, 'gray'), 200);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+// Container principal
+.main-container {
+  @include container(1200px);
+  min-height: calc(100vh - 64px);
+  padding-top: map-get($spacing, 'lg');
+  padding-bottom: map-get($spacing, 'xl');
+
+  @include respond-to('md') {
+    padding-top: map-get($spacing, 'xl');
+    padding-bottom: map-get($spacing, 'xxxl');
+  }
+}
+
+// Cards responsivos
+.card {
+  @include card;
+
+  &.card-elevated {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+
+    @include respond-to('md') {
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+    }
+  }
+}
+
+// Botones del sistema
+.btn {
+  @include button-responsive;
+  font-family: inherit;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: map-get($spacing, 'sm');
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.btn-primary {
+    background-color: map-get(map-get($colors, 'primary'), 500);
+    color: white;
+
+    &:hover {
+      background-color: map-get(map-get($colors, 'primary'), 700);
+      transform: translateY(-1px);
+    }
+  }
+
+  &.btn-secondary {
+    background-color: transparent;
+    color: map-get(map-get($colors, 'primary'), 500);
+    border: 1px solid map-get(map-get($colors, 'primary'), 500);
+
+    &:hover {
+      background-color: map-get(map-get($colors, 'primary'), 500);
+      color: white;
+    }
+  }
+
+  &.btn-large {
+    padding: map-get($spacing, 'md') map-get($spacing, 'xl');
+    font-size: 1rem;
+    min-height: 48px;
+
+    @include respond-to('md') {
+      padding: map-get($spacing, 'lg') map-get($spacing, 'xxl');
+      font-size: 1.125rem;
+      min-height: 52px;
+    }
+  }
+
+  &.btn-full {
+    width: 100%;
+
+    @include respond-to('md') {
+      width: auto;
+      min-width: 200px;
+    }
+  }
+}
+
+// Sistema de notificaciones móvil
+.notification {
+  position: fixed;
+  top: map-get($spacing, 'lg');
+  left: map-get($spacing, 'md');
+  right: map-get($spacing, 'md');
+  z-index: 1000;
+  @include card(map-get($spacing, 'md'));
+  transform: translateY(-100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+
+  @include respond-to('md') {
+    left: auto;
+    right: map-get($spacing, 'lg');
+    max-width: 400px;
+  }
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  &.success {
+    border-left: 4px solid map-get($colors, 'success');
+  }
+
+  &.error {
+    border-left: 4px solid map-get($colors, 'error');
+  }
+}
+
+// =====================================================
+// 🛒 COMPONENTES E-COMMERCE MOBILE-FIRST
+// =====================================================
+
+// Barra de búsqueda móvil
+.search-bar {
+  position: relative;
+  width: 100%;
+  max-width: none;
+
+  @include respond-to('md') {
+    max-width: 400px;
+  }
+
+  input {
+    width: 100%;
+    padding-right: 48px;
+  }
+
+  .search-icon {
+    position: absolute;
+    right: map-get($spacing, 'md');
+    top: 50%;
+    transform: translateY(-50%);
+    color: map-get(map-get($colors, 'gray'), 500);
+  }
+}
+
+// Navegación de categorías
+.category-nav {
+  display: flex;
+  overflow-x: auto;
+  gap: map-get($spacing, 'sm');
+  padding: map-get($spacing, 'md') 0;
+
+  @include respond-to('md') {
+    justify-content: center;
+    overflow-x: visible;
+    gap: map-get($spacing, 'lg');
+  }
+
+  .category-item {
+    flex-shrink: 0;
+    padding: map-get($spacing, 'sm') map-get($spacing, 'md');
+    border-radius: 20px;
+    background: white;
+    border: 1px solid map-get(map-get($colors, 'gray'), 300);
+    font-size: 0.875rem;
+    white-space: nowrap;
+    transition: all 0.2s;
+
+    &.active {
+      background: map-get(map-get($colors, 'primary'), 500);
+      color: white;
+      border-color: map-get(map-get($colors, 'primary'), 500);
+    }
+  }
+}
+
+// Carrito flotante para móvil
+.cart-fab {
+  position: fixed;
+  bottom: map-get($spacing, 'lg');
+  right: map-get($spacing, 'lg');
+  z-index: 100;
+  @include touch-target(56px);
+  background: map-get(map-get($colors, 'primary'), 500);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+
+  @include respond-to('md') {
+    display: none; // Ocultar en desktop, usar header cart
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    @include touch-target(20px);
+    background: map-get($colors, 'error');
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+}
+
+// =====================================================
+// 🔧 UTILIDADES ESPECÍFICAS MOBILE
+// =====================================================
+
+// Ocultar elementos en móvil
+.hide-mobile {
+  @media (max-width: #{map-get($breakpoints, 'md') - 1px}) {
+    display: none !important;
+  }
+}
+
+// Mostrar solo en móvil
+.show-mobile {
+  @include respond-to('md') {
+    display: none !important;
+  }
+}
+
+// Scroll horizontal suave
+.scroll-x {
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
+// Safe areas para notch/island
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+// =====================================================
+// 🎯 MEJORAS DE PERFORMANCE MÓVIL
+// =====================================================
+
+// Optimizaciones de rendering
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+// Lazy loading placeholder
+.lazy-image {
+  background: linear-gradient(90deg,
+    map-get(map-get($colors, 'gray'), 200) 0%,
+    map-get(map-get($colors, 'gray'), 100) 50%,
+    map-get(map-get($colors, 'gray'), 200) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

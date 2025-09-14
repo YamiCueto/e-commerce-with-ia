@@ -1,0 +1,427 @@
+// =====================================================
+// 📱 MOBILE-FIRST DESIGN SYSTEM
+// =====================================================
+// Una guía completa para diseño responsivo y mobile-first
+
+// =====================================================
+// 🎯 BREAKPOINTS SYSTEM
+// =====================================================
+// Seguimos el enfoque mobile-first: empezamos con móviles y escalamos hacia arriba
+
+$breakpoints: (
+  'xs': 0,      // Móviles pequeños (iPhone SE)
+  'sm': 576px,  // Móviles grandes (iPhone 12/13)
+  'md': 768px,  // Tablets
+  'lg': 1024px, // Laptops pequeñas
+  'xl': 1200px, // Desktop
+  'xxl': 1400px // Pantallas grandes
+) !default;
+
+// =====================================================
+// 📐 SPACING SYSTEM (Mobile-First)
+// =====================================================
+$spacing: (
+  'xs': 0.25rem,  // 4px
+  'sm': 0.5rem,   // 8px
+  'md': 1rem,     // 16px
+  'lg': 1.5rem,   // 24px
+  'xl': 2rem,     // 32px
+  'xxl': 3rem,    // 48px
+  'xxxl': 4rem    // 64px
+) !default;
+
+// =====================================================
+// 🔤 TYPOGRAPHY SYSTEM (Responsive)
+// =====================================================
+$typography: (
+  'h1': (
+    'mobile': (font-size: 1.75rem, line-height: 1.2, margin-bottom: 1rem),
+    'tablet': (font-size: 2.25rem, line-height: 1.1, margin-bottom: 1.5rem),
+    'desktop': (font-size: 3rem, line-height: 1.1, margin-bottom: 2rem)
+  ),
+  'h2': (
+    'mobile': (font-size: 1.5rem, line-height: 1.3, margin-bottom: 0.75rem),
+    'tablet': (font-size: 1.875rem, line-height: 1.2, margin-bottom: 1rem),
+    'desktop': (font-size: 2.25rem, line-height: 1.2, margin-bottom: 1.5rem)
+  ),
+  'h3': (
+    'mobile': (font-size: 1.25rem, line-height: 1.4, margin-bottom: 0.5rem),
+    'tablet': (font-size: 1.5rem, line-height: 1.3, margin-bottom: 0.75rem),
+    'desktop': (font-size: 1.875rem, line-height: 1.3, margin-bottom: 1rem)
+  ),
+  'body': (
+    'mobile': (font-size: 0.875rem, line-height: 1.5),
+    'tablet': (font-size: 1rem, line-height: 1.6),
+    'desktop': (font-size: 1rem, line-height: 1.6)
+  ),
+  'small': (
+    'mobile': (font-size: 0.75rem, line-height: 1.4),
+    'tablet': (font-size: 0.875rem, line-height: 1.5),
+    'desktop': (font-size: 0.875rem, line-height: 1.5)
+  )
+) !default;
+
+// =====================================================
+// 🎨 COLOR SYSTEM
+// =====================================================
+$colors: (
+  // Primary palette
+  'primary': (
+    50: #e3f2fd,
+    100: #bbdefb,
+    500: #2196f3,
+    700: #1976d2,
+    900: #0d47a1
+  ),
+  // Semantic colors
+  'success': #4caf50,
+  'warning': #ff9800,
+  'error': #f44336,
+  'info': #2196f3,
+  // Neutral colors
+  'gray': (
+    50: #fafafa,
+    100: #f5f5f5,
+    200: #eeeeee,
+    300: #e0e0e0,
+    400: #bdbdbd,
+    500: #9e9e9e,
+    600: #757575,
+    700: #616161,
+    800: #424242,
+    900: #212121
+  )
+) !default;
+
+// =====================================================
+// 🧩 MIXINS PARA RESPONSIVE DESIGN
+// =====================================================
+
+// Media Query Mixin
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $value: map-get($breakpoints, $breakpoint);
+    @if $value == 0 {
+      @content;
+    } @else {
+      @media (min-width: $value) {
+        @content;
+      }
+    }
+  } @else {
+    @warn "Breakpoint '#{$breakpoint}' not found in $breakpoints map.";
+  }
+}
+
+// Container responsivo
+@mixin container($max-width: null) {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 map-get($spacing, 'md');
+
+  @include respond-to('sm') {
+    padding: 0 map-get($spacing, 'lg');
+  }
+
+  @include respond-to('md') {
+    padding: 0 map-get($spacing, 'xl');
+  }
+
+  @if $max-width {
+    @include respond-to('lg') {
+      max-width: $max-width;
+    }
+  }
+}
+
+// Grid responsivo
+@mixin grid($columns: 1, $gap: map-get($spacing, 'md')) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+
+  // Breakpoints automáticos para grid
+  @include respond-to('md') {
+    @if $columns > 2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @include respond-to('lg') {
+    grid-template-columns: repeat($columns, 1fr);
+  }
+}
+
+// Flex utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Card component
+@mixin card($padding: map-get($spacing, 'lg')) {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: $padding;
+
+  @include respond-to('md') {
+    padding: map-get($spacing, 'xl');
+    border-radius: 12px;
+  }
+}
+
+// Button responsive
+@mixin button-responsive {
+  padding: map-get($spacing, 'sm') map-get($spacing, 'md');
+  font-size: 0.875rem;
+  border-radius: 6px;
+  min-height: 44px; // Mínimo para touch targets
+
+  @include respond-to('md') {
+    padding: map-get($spacing, 'md') map-get($spacing, 'lg');
+    font-size: 1rem;
+    border-radius: 8px;
+    min-height: 48px;
+  }
+}
+
+// Touch targets (mínimo 44px para móvil)
+@mixin touch-target($size: 44px) {
+  min-width: $size;
+  min-height: $size;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// =====================================================
+// 🔧 UTILITY CLASSES
+// =====================================================
+
+// Spacing utilities
+@each $key, $value in $spacing {
+  .m-#{$key} { margin: $value !important; }
+  .mt-#{$key} { margin-top: $value !important; }
+  .mb-#{$key} { margin-bottom: $value !important; }
+  .ml-#{$key} { margin-left: $value !important; }
+  .mr-#{$key} { margin-right: $value !important; }
+  .mx-#{$key} { margin-left: $value !important; margin-right: $value !important; }
+  .my-#{$key} { margin-top: $value !important; margin-bottom: $value !important; }
+
+  .p-#{$key} { padding: $value !important; }
+  .pt-#{$key} { padding-top: $value !important; }
+  .pb-#{$key} { padding-bottom: $value !important; }
+  .pl-#{$key} { padding-left: $value !important; }
+  .pr-#{$key} { padding-right: $value !important; }
+  .px-#{$key} { padding-left: $value !important; padding-right: $value !important; }
+  .py-#{$key} { padding-top: $value !important; padding-bottom: $value !important; }
+}
+
+// Display utilities
+.d-block { display: block !important; }
+.d-inline { display: inline !important; }
+.d-inline-block { display: inline-block !important; }
+.d-flex { display: flex !important; }
+.d-grid { display: grid !important; }
+.d-none { display: none !important; }
+
+// Responsive display utilities
+@each $breakpoint, $value in $breakpoints {
+  @if $value > 0 {
+    @include respond-to($breakpoint) {
+      .d-#{$breakpoint}-block { display: block !important; }
+      .d-#{$breakpoint}-flex { display: flex !important; }
+      .d-#{$breakpoint}-grid { display: grid !important; }
+      .d-#{$breakpoint}-none { display: none !important; }
+    }
+  }
+}
+
+// Flex utilities
+.flex-center { @include flex-center; }
+.flex-between { @include flex-between; }
+.flex-column { @include flex-column; }
+.flex-wrap { flex-wrap: wrap !important; }
+.flex-nowrap { flex-wrap: nowrap !important; }
+
+// Text utilities
+.text-center { text-align: center !important; }
+.text-left { text-align: left !important; }
+.text-right { text-align: right !important; }
+
+@include respond-to('md') {
+  .text-md-center { text-align: center !important; }
+  .text-md-left { text-align: left !important; }
+  .text-md-right { text-align: right !important; }
+}
+
+// =====================================================
+// 📱 COMPONENTES MOBILE-FIRST
+// =====================================================
+
+// Navigation mobile-first
+.mobile-nav {
+  @include container;
+  @include flex-between;
+  padding: map-get($spacing, 'md');
+  background: white;
+  border-bottom: 1px solid map-get(map-get($colors, 'gray'), 200);
+
+  .logo {
+    font-size: 1.25rem;
+    font-weight: 600;
+
+    @include respond-to('md') {
+      font-size: 1.5rem;
+    }
+  }
+
+  .nav-actions {
+    display: flex;
+    gap: map-get($spacing, 'sm');
+
+    .nav-button {
+      @include touch-target;
+      background: none;
+      border: none;
+      border-radius: 50%;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: map-get(map-get($colors, 'gray'), 100);
+      }
+    }
+  }
+}
+
+// Product grid mobile-first
+.product-grid {
+  @include grid(1, map-get($spacing, 'md'));
+
+  @include respond-to('sm') {
+    @include grid(2, map-get($spacing, 'lg'));
+  }
+
+  @include respond-to('lg') {
+    @include grid(3, map-get($spacing, 'xl'));
+  }
+
+  @include respond-to('xl') {
+    @include grid(4, map-get($spacing, 'xl'));
+  }
+}
+
+// Product card mobile-first
+.product-card {
+  @include card;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .product-image {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: map-get($spacing, 'md');
+  }
+
+  .product-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: map-get($spacing, 'sm');
+    line-height: 1.4;
+
+    @include respond-to('md') {
+      font-size: 1.125rem;
+    }
+  }
+
+  .product-price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: map-get(map-get($colors, 'primary'), 700);
+    margin-bottom: map-get($spacing, 'md');
+  }
+
+  .add-to-cart-btn {
+    @include button-responsive;
+    width: 100%;
+    background-color: map-get(map-get($colors, 'primary'), 500);
+    color: white;
+    border: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: map-get(map-get($colors, 'primary'), 700);
+    }
+  }
+}
+
+// =====================================================
+// 📋 GUÍA DE USO
+// =====================================================
+
+/*
+🎯 CÓMO USAR ESTA GUÍA:
+
+1. BREAKPOINTS:
+   - Siempre empieza diseñando para móvil (xs: 0)
+   - Usa @include respond-to('md') para tablets
+   - Usa @include respond-to('lg') para desktop
+
+2. SPACING:
+   - Usa las variables $spacing para consistencia
+   - En móvil usa espacios más pequeños
+   - Escala hacia arriba en breakpoints mayores
+
+3. TYPOGRAPHY:
+   - Los tamaños se ajustan automáticamente
+   - Usa line-height más amplio en móvil para legibilidad
+
+4. TOUCH TARGETS:
+   - Mínimo 44px para elementos táctiles
+   - Usa el mixin @include touch-target
+
+5. GRID SYSTEM:
+   - @include grid(1) para móvil
+   - Se ajusta automáticamente en breakpoints
+
+EJEMPLO DE USO:
+
+.mi-componente {
+  // Mobile first (default)
+  padding: map-get($spacing, 'md');
+  font-size: 0.875rem;
+
+  // Tablet y superior
+  @include respond-to('md') {
+    padding: map-get($spacing, 'lg');
+    font-size: 1rem;
+  }
+
+  // Desktop y superior
+  @include respond-to('lg') {
+    padding: map-get($spacing, 'xl');
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+*/

@@ -1,0 +1,648 @@
+/* =====================================================
+   📱 EJEMPLOS PRÁCTICOS DE IMPLEMENTACIÓN MOBILE-FIRST
+   ===================================================== */
+
+/* Este archivo muestra cómo aplicar la guía de estilos
+   mobile-first a los componentes existentes de tu e-commerce */
+
+// =====================================================
+// 1️⃣ HEADER COMPONENT - Mobile First
+// =====================================================
+
+.header-toolbar {
+  // Mobile first: Stack vertical, padding reducido
+  padding: map-get($spacing, 'sm') map-get($spacing, 'md');
+
+  .header-container {
+    display: flex;
+    flex-direction: column;
+    gap: map-get($spacing, 'md');
+
+    // Tablet: Layout horizontal
+    @include respond-to('md') {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: map-get($spacing, 'lg');
+      padding: 0 map-get($spacing, 'lg');
+    }
+  }
+
+  .logo-section {
+    text-align: center;
+
+    h1 {
+      font-size: 1.25rem;
+      margin: 0;
+
+      @include respond-to('md') {
+        font-size: 1.5rem;
+        text-align: left;
+      }
+    }
+  }
+
+  .search-section {
+    order: 3; // En móvil va al final
+
+    @include respond-to('md') {
+      order: 2;
+      flex: 1;
+      max-width: 400px;
+    }
+
+    .search-field {
+      width: 100%;
+
+      input {
+        font-size: 16px; // Previene zoom en iOS
+        padding: map-get($spacing, 'sm');
+      }
+    }
+  }
+
+  .action-section {
+    display: flex;
+    justify-content: center;
+    gap: map-get($spacing, 'md');
+
+    @include respond-to('md') {
+      justify-content: flex-end;
+      order: 3;
+    }
+
+    button {
+      @include touch-target(48px);
+      border-radius: 50%;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+// =====================================================
+// 2️⃣ HOME COMPONENT - Grid Responsivo
+// =====================================================
+
+.hero-section {
+  // Mobile: Padding reducido, texto centrado
+  padding: map-get($spacing, 'xl') map-get($spacing, 'md');
+  text-align: center;
+
+  @include respond-to('md') {
+    padding: map-get($spacing, 'xxxl') map-get($spacing, 'xl');
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    line-height: 1.2;
+    margin-bottom: map-get($spacing, 'lg');
+
+    @include respond-to('md') {
+      font-size: 2.5rem;
+      margin-bottom: map-get($spacing, 'xl');
+    }
+  }
+
+  .cta-button {
+    @include button-responsive;
+    width: 100%;
+    max-width: 300px;
+
+    @include respond-to('md') {
+      width: auto;
+      min-width: 200px;
+    }
+  }
+}
+
+.categories-grid {
+  @include grid(1, map-get($spacing, 'lg'));
+  padding: 0 map-get($spacing, 'md');
+
+  @include respond-to('sm') {
+    @include grid(2, map-get($spacing, 'lg'));
+  }
+
+  @include respond-to('lg') {
+    @include grid(3, map-get($spacing, 'xl'));
+    padding: 0 map-get($spacing, 'xl');
+  }
+}
+
+.category-card {
+  @include card;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: map-get($spacing, 'md');
+
+    @include respond-to('md') {
+      height: 200px;
+    }
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    margin: 0;
+
+    @include respond-to('md') {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+// =====================================================
+// 3️⃣ PRODUCTS COMPONENT - Lista/Grid Adaptable
+// =====================================================
+
+.products-header {
+  display: flex;
+  flex-direction: column;
+  gap: map-get($spacing, 'md');
+  padding: map-get($spacing, 'lg') map-get($spacing, 'md');
+
+  @include respond-to('md') {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: map-get($spacing, 'xl');
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    text-align: center;
+
+    @include respond-to('md') {
+      font-size: 2rem;
+      text-align: left;
+    }
+  }
+
+  .filters-section {
+    display: flex;
+    flex-direction: column;
+    gap: map-get($spacing, 'sm');
+
+    @include respond-to('md') {
+      flex-direction: row;
+      align-items: center;
+      gap: map-get($spacing, 'lg');
+    }
+  }
+}
+
+.products-grid {
+  @include grid(1, map-get($spacing, 'lg'));
+  padding: 0 map-get($spacing, 'md');
+
+  @include respond-to('sm') {
+    @include grid(2, map-get($spacing, 'lg'));
+  }
+
+  @include respond-to('lg') {
+    @include grid(3, map-get($spacing, 'xl'));
+    padding: 0 map-get($spacing, 'xl');
+  }
+
+  @include respond-to('xl') {
+    @include grid(4, map-get($spacing, 'xl'));
+  }
+}
+
+.product-card {
+  @include card(map-get($spacing, 'lg'));
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .product-image {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: map-get($spacing, 'md');
+  }
+
+  .product-info {
+    .product-name {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 map-get($spacing, 'sm') 0;
+      line-height: 1.4;
+
+      @include respond-to('md') {
+        font-size: 1.125rem;
+      }
+    }
+
+    .product-price {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: map-get(map-get($colors, 'primary'), 600);
+      margin-bottom: map-get($spacing, 'md');
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: map-get($spacing, 'xs');
+      margin-bottom: map-get($spacing, 'md');
+      font-size: 0.875rem;
+      color: map-get(map-get($colors, 'gray'), 600);
+    }
+  }
+
+  .add-to-cart-btn {
+    @include button-responsive;
+    width: 100%;
+    background: map-get(map-get($colors, 'primary'), 500);
+    color: white;
+    border: none;
+    font-weight: 500;
+
+    &:hover {
+      background: map-get(map-get($colors, 'primary'), 700);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// =====================================================
+// 4️⃣ CART COMPONENT - Optimizado para móvil
+// =====================================================
+
+.cart-container {
+  min-height: calc(100vh - 64px);
+}
+
+.cart-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: map-get($spacing, 'xl') map-get($spacing, 'md');
+  text-align: center;
+
+  @include respond-to('md') {
+    padding: map-get($spacing, 'xxxl') map-get($spacing, 'xl');
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    margin: 0 0 map-get($spacing, 'sm') 0;
+
+    @include respond-to('md') {
+      font-size: 2.25rem;
+    }
+  }
+
+  .cart-summary {
+    font-size: 1rem;
+    opacity: 0.9;
+  }
+}
+
+.cart-content {
+  @include container(1200px);
+  display: flex;
+  flex-direction: column;
+  gap: map-get($spacing, 'xl');
+
+  @include respond-to('lg') {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.cart-items {
+  flex: 2;
+
+  .cart-item {
+    @include card;
+    display: flex;
+    gap: map-get($spacing, 'md');
+    margin-bottom: map-get($spacing, 'lg');
+
+    @include respond-to('md') {
+      gap: map-get($spacing, 'lg');
+    }
+
+    .item-image {
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+
+      @include respond-to('md') {
+        width: 120px;
+        height: 120px;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 6px;
+      }
+    }
+
+    .item-details {
+      flex: 1;
+      min-width: 0; // Permite que el texto se trunque
+
+      h3 {
+        font-size: 1rem;
+        margin: 0 0 map-get($spacing, 'xs') 0;
+
+        @include respond-to('md') {
+          font-size: 1.125rem;
+        }
+      }
+
+      .item-price {
+        font-size: 0.875rem;
+        color: map-get(map-get($colors, 'gray'), 600);
+
+        @include respond-to('md') {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: map-get($spacing, 'sm');
+      margin: map-get($spacing, 'sm') 0;
+
+      button {
+        @include touch-target(32px);
+        border: 1px solid map-get(map-get($colors, 'gray'), 300);
+        background: white;
+        border-radius: 50%;
+
+        @include respond-to('md') {
+          @include touch-target(36px);
+        }
+      }
+
+      .quantity {
+        font-weight: 600;
+        min-width: 24px;
+        text-align: center;
+      }
+    }
+
+    .item-total {
+      text-align: right;
+
+      .total-price {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: map-get(map-get($colors, 'primary'), 600);
+        margin: 0;
+
+        @include respond-to('md') {
+          font-size: 1.25rem;
+        }
+      }
+    }
+  }
+}
+
+.cart-summary {
+  flex: 1;
+  min-width: 300px;
+
+  .summary-card {
+    @include card;
+    position: sticky;
+    top: map-get($spacing, 'xl');
+
+    h3 {
+      font-size: 1.25rem;
+      margin: 0 0 map-get($spacing, 'lg') 0;
+      text-align: center;
+
+      @include respond-to('md') {
+        font-size: 1.5rem;
+      }
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: map-get($spacing, 'sm') 0;
+      border-bottom: 1px solid map-get(map-get($colors, 'gray'), 200);
+
+      &:last-child {
+        border-bottom: none;
+        padding-top: map-get($spacing, 'md');
+        font-weight: 700;
+        font-size: 1.125rem;
+      }
+    }
+
+    .checkout-btn {
+      @include button-responsive;
+      width: 100%;
+      background: map-get($colors, 'success');
+      color: white;
+      border: none;
+      font-weight: 600;
+      margin-top: map-get($spacing, 'lg');
+
+      &:hover {
+        background: darken(map-get($colors, 'success'), 10%);
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+// =====================================================
+// 5️⃣ CHECKOUT COMPONENT - Formulario móvil
+// =====================================================
+
+.checkout-container {
+  @include container(800px);
+}
+
+.checkout-form {
+  @include card;
+
+  .form-section {
+    margin-bottom: map-get($spacing, 'xl');
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    h3 {
+      font-size: 1.125rem;
+      margin: 0 0 map-get($spacing, 'lg') 0;
+      padding-bottom: map-get($spacing, 'sm');
+      border-bottom: 2px solid map-get(map-get($colors, 'gray'), 200);
+
+      @include respond-to('md') {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  .form-group {
+    margin-bottom: map-get($spacing, 'lg');
+
+    label {
+      display: block;
+      margin-bottom: map-get($spacing, 'sm');
+      font-weight: 500;
+      color: map-get(map-get($colors, 'gray'), 700);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: map-get($spacing, 'md');
+      border: 2px solid map-get(map-get($colors, 'gray'), 300);
+      border-radius: 6px;
+      font-size: 16px; // Previene zoom en móvil
+      transition: all 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: map-get(map-get($colors, 'primary'), 500);
+        box-shadow: 0 0 0 3px rgba(map-get(map-get($colors, 'primary'), 500), 0.1);
+      }
+
+      &.error {
+        border-color: map-get($colors, 'error');
+      }
+    }
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: map-get($spacing, 'lg');
+
+    @include respond-to('md') {
+      flex-direction: row;
+
+      .form-group {
+        flex: 1;
+      }
+    }
+  }
+
+  .payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: map-get($spacing, 'md');
+
+    @include respond-to('md') {
+      flex-direction: row;
+    }
+
+    .payment-method {
+      flex: 1;
+      padding: map-get($spacing, 'md');
+      border: 2px solid map-get(map-get($colors, 'gray'), 300);
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &.selected {
+        border-color: map-get(map-get($colors, 'primary'), 500);
+        background: rgba(map-get(map-get($colors, 'primary'), 500), 0.05);
+      }
+
+      &:hover {
+        border-color: map-get(map-get($colors, 'primary'), 300);
+      }
+    }
+  }
+
+  .place-order-btn {
+    @include button-responsive;
+    width: 100%;
+    background: map-get($colors, 'success');
+    color: white;
+    border: none;
+    font-weight: 600;
+    font-size: 1.125rem;
+    margin-top: map-get($spacing, 'xl');
+
+    @include respond-to('md') {
+      font-size: 1.25rem;
+      min-height: 56px;
+    }
+
+    &:hover {
+      background: darken(map-get($colors, 'success'), 10%);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+}
+
+// =====================================================
+// 💡 TIPS DE IMPLEMENTACIÓN
+// =====================================================
+
+/*
+🎯 CÓMO IMPLEMENTAR ESTOS ESTILOS:
+
+1. REEMPLAZA los estilos actuales por estos mobile-first
+2. IMPORTA los archivos base:
+   @import 'mobile-first-guide';
+   @import 'mobile-first-base';
+
+3. APLICA las clases utility donde sea necesario:
+   - .hide-mobile / .show-mobile
+   - .d-flex / .d-grid
+   - .text-center / .text-md-left
+
+4. USA los mixins en lugar de escribir media queries:
+   @include respond-to('md') { ... }
+
+5. SIEMPRE diseña primero para móvil, luego escala hacia arriba
+
+6. TESTA en dispositivos reales o Chrome DevTools
+
+🚀 BENEFICIOS:
+- ✅ Mejor rendimiento en móvil
+- ✅ Código más limpio y mantenible
+- ✅ Experiencia de usuario consistente
+- ✅ Fácil de escalar y modificar
+*/
