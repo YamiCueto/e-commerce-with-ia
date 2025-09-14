@@ -17,6 +17,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -36,7 +43,14 @@ const MaterialComponents = [
   MatSidenavModule,
   MatListModule,
   MatTabsModule,
-  MatDividerModule
+  MatDividerModule,
+  MatExpansionModule,
+  MatCheckboxModule,
+  MatRadioModule,
+  MatSlideToggleModule,
+  MatStepperModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 ];
 
 @NgModule({

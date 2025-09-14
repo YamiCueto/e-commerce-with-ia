@@ -1,5 +1,6 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { Product } from './product.service';
+import { NotificationService } from './notification.service';
 
 export interface CartItem {
   product: Product;
@@ -11,6 +12,7 @@ export interface CartItem {
   providedIn: 'root'
 })
 export class CartService {
+  private notificationService = inject(NotificationService);
   private cartItems = signal<CartItem[]>([]);
 
   // Computed signals for reactive cart data
@@ -20,6 +22,13 @@ export class CartService {
   tax = computed(() => this.subtotal() * 0.15); // 15% tax
   shipping = computed(() => this.subtotal() > 100 ? 0 : 9.99);
   total = computed(() => this.subtotal() + this.tax() + this.shipping());
+
+  constructor() {
+    // Auto-save to localStorage whenever cart changes
+    effect(() => {
+      this.saveToStorage();
+    });
+  }
 
   addToCart(product: Product, quantity: number = 1): void {
     const existingItemIndex = this.cartItems().findIndex(item => item.product.id === product.id);
@@ -37,6 +46,15 @@ export class CartService {
           total: product.price * newQuantity
         };
         this.cartItems.set(currentItems);
+
+        // Show notification for update
+        this.notificationService.showCartUpdated(product.name, newQuantity);
+      } else {
+        // Show warning if exceeds stock
+        this.notificationService.showWarning(
+          'Stock limitado',
+          `Solo tenemos ${product.stockCount} unidades de ${product.name} disponibles`
+        );
       }
     } else {
       // Add new item
@@ -47,6 +65,15 @@ export class CartService {
           total: product.price * quantity
         };
         this.cartItems.set([...this.cartItems(), newItem]);
+
+        // Show success notification
+        this.notificationService.showCartSuccess(product.name, quantity);
+      } else {
+        // Show warning if exceeds stock
+        this.notificationService.showWarning(
+          'Stock limitado',
+          `Solo tenemos ${product.stockCount} unidades de ${product.name} disponibles`
+        );
       }
     }
   }
@@ -69,16 +96,34 @@ export class CartService {
           total: item.product.price * quantity
         };
         this.cartItems.set(currentItems);
+
+        // Show update notification
+        this.notificationService.showCartUpdated(item.product.name, quantity);
+      } else {
+        // Show warning if exceeds stock
+        this.notificationService.showWarning(
+          'Stock limitado',
+          `Solo tenemos ${item.product.stockCount} unidades disponibles`
+        );
       }
     }
   }
 
   removeFromCart(productId: number): void {
+    const itemToRemove = this.cartItems().find(item => item.product.id === productId);
     this.cartItems.set(this.cartItems().filter(item => item.product.id !== productId));
+
+    // Show removal notification
+    if (itemToRemove) {
+      this.notificationService.showCartRemoved(itemToRemove.product.name);
+    }
   }
 
   clearCart(): void {
-    this.cartItems.set([]);
+    if (this.cartItems().length > 0) {
+      this.cartItems.set([]);
+      this.notificationService.showCartCleared();
+    }
   }
 
   getCartItem(productId: number): CartItem | undefined {
@@ -99,15 +144,33 @@ export class CartService {
       }
     } catch (error) {
       console.error('Error loading cart from storage:', error);
+      this.notificationService.showError(
+        'Error de carga',
+        'No se pudo cargar el carrito guardado'
+      );
     }
   }
 
-  // Save to localStorage (can be called on cart changes)
-  saveToStorage(): void {
+  // Save to localStorage (called automatically via effect)
+  private saveToStorage(): void {
     try {
       localStorage.setItem('cart', JSON.stringify(this.cartItems()));
     } catch (error) {
       console.error('Error saving cart to storage:', error);
     }
+  }
+
+  /**
+   * Calculate cart summary for checkout
+   */
+  getCartSummary() {
+    return {
+      items: this.items(),
+      itemCount: this.itemCount(),
+      subtotal: this.subtotal(),
+      tax: this.tax(),
+      shipping: this.shipping(),
+      total: this.total()
+    };
   }
 }

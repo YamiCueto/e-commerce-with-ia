@@ -1,0 +1,271 @@
+<div class="checkout-container">
+  <mat-card class="checkout-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>shopping_cart_checkout</mat-icon>
+        Checkout
+      </mat-card-title>
+      <mat-card-subtitle>
+        Completa tu pedido
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+          <h3>Resumen del Pedido</h3>
+          <div class="order-items">
+            <div *ngFor="let item of cartItems" class="order-item">
+              <div class="item-info">
+                <span class="item-name">{{ item.product.name }}</span>
+                <span class="item-quantity">x{{ item.quantity }}</span>
+              </div>
+              <span class="item-price">${{ item.total.toFixed(2) }}</span>
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="order-totals">
+            <div class="total-row">
+              <span>Subtotal:</span>
+              <span>${{ cartSummary.subtotal.toFixed(2) }}</span>
+            </div>
+            <div class="total-row">
+              <span>Impuestos:</span>
+              <span>${{ cartSummary.tax.toFixed(2) }}</span>
+            </div>
+            <div class="total-row">
+              <span>Envío:</span>
+              <span>${{ cartSummary.shipping.toFixed(2) }}</span>
+            </div>
+            <div class="total-row total-final">
+              <span>Total:</span>
+              <span>${{ cartSummary.total.toFixed(2) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shipping Information -->
+        <mat-card class="form-section">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>local_shipping</mat-icon>
+              Información de Envío
+            </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div formGroupName="shipping" class="shipping-form">
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="firstName" />
+                <mat-error>
+                  {{ getErrorMessage('shipping.firstName') }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Apellido</mat-label>
+                <input matInput formControlName="lastName" />
+                <mat-error>
+                  {{ getErrorMessage('shipping.lastName') }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" />
+                <mat-error>
+                  {{ getErrorMessage('shipping.email') }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Teléfono</mat-label>
+                <input matInput formControlName="phone" placeholder="1234567890" />
+                <mat-error>
+                  {{ getErrorMessage('shipping.phone') }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Dirección</mat-label>
+              <input matInput formControlName="address" />
+              <mat-error>
+                {{ getErrorMessage('shipping.address') }}
+              </mat-error>
+            </mat-form-field>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="third-width">
+                <mat-label>Ciudad</mat-label>
+                <input matInput formControlName="city" />
+                <mat-error>
+                  {{ getErrorMessage('shipping.city') }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="third-width">
+                <mat-label>Estado</mat-label>
+                <input matInput formControlName="state" />
+                <mat-error>
+                  {{ getErrorMessage('shipping.state') }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="third-width">
+                <mat-label>Código Postal</mat-label>
+                <input matInput formControlName="zipCode" placeholder="12345" />
+                <mat-error>
+                  {{ getErrorMessage('shipping.zipCode') }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Payment Information -->
+        <mat-card class="form-section">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>payment</mat-icon>
+              Información de Pago
+            </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+
+          <div formGroupName="payment" class="payment-form">
+
+            <!-- Payment Method Selection -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Método de Pago</mat-label>
+              <mat-select formControlName="method">
+                <mat-option *ngFor="let method of paymentMethods" [value]="method.value">
+                  <mat-icon>{{ method.icon }}</mat-icon>
+                  {{ method.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- Credit/Debit Card Details -->
+            <div *ngIf="checkoutForm.get('payment.method')?.value.includes('card')" class="card-details">
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="two-thirds">
+                  <mat-label>Número de Tarjeta</mat-label>
+                  <input matInput formControlName="cardNumber" placeholder="1234567890123456" maxlength="16" />
+                  <mat-error>
+                    {{ getErrorMessage('payment.cardNumber') }}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="third-width">
+                  <mat-label>Tipo</mat-label>
+                  <mat-select formControlName="cardType">
+                    <mat-option *ngFor="let type of creditCardTypes" [value]="type.value">
+                      {{ type.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nombre en la Tarjeta</mat-label>
+                <input matInput formControlName="cardHolderName" />
+                <mat-error>
+                  {{ getErrorMessage('payment.cardHolderName') }}
+                </mat-error>
+              </mat-form-field>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="third-width">
+                  <mat-label>Mes</mat-label>
+                  <mat-select formControlName="expiryMonth">
+                    <mat-option *ngFor="let month of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="month">
+                      {{ month.toString().padStart(2, '0') }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ getErrorMessage('payment.expiryMonth') }}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="third-width">
+                  <mat-label>Año</mat-label>
+                  <mat-select formControlName="expiryYear">
+                    <mat-option *ngFor="let year of getExpiryYears()" [value]="year">
+                      {{ year }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ getErrorMessage('payment.expiryYear') }}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="third-width">
+                  <mat-label>CVV</mat-label>
+                  <input matInput formControlName="cvv" placeholder="123" maxlength="4" />
+                  <mat-error>
+                    {{ getErrorMessage('payment.cvv') }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Alternative Payment Methods Info -->
+            <div *ngIf="checkoutForm.get('payment.method')?.value === 'paypal'" class="alternative-payment">
+              <mat-icon>info</mat-icon>
+              <p>Serás redirigido a PayPal para completar tu pago de forma segura.</p>
+            </div>
+
+            <div *ngIf="checkoutForm.get('payment.method')?.value === 'bank_transfer'" class="alternative-payment">
+              <mat-icon>info</mat-icon>
+              <p>Te enviaremos las instrucciones para la transferencia bancaria por email.</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Terms and Conditions -->
+        <div class="terms-section">
+          <mat-checkbox formControlName="agreeToTerms">
+            Acepto los
+            <a href="#" target="_blank">términos y condiciones</a>
+            y la
+            <a href="#" target="_blank">política de privacidad</a>
+          </mat-checkbox>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="onCancel()"
+            [disabled]="isProcessing">
+            <mat-icon>arrow_back</mat-icon>
+            Volver al Carrito
+          </button>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="!checkoutForm.valid || isProcessing"
+            class="checkout-button">
+            <mat-icon>{{ isProcessing ? 'hourglass_empty' : 'lock' }}</mat-icon>
+            {{ isProcessing ? 'Procesando...' : 'Pagar $' + cartSummary.total.toFixed(2) }}
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

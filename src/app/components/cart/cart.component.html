@@ -3,14 +3,14 @@
   <div class="header-section">
     <div class="container">
       <h1>Carrito de Compras</h1>
-      <p *ngIf="cartItems.length > 0">{{ cartItems.length }} productos en tu carrito</p>
-      <p *ngIf="cartItems.length === 0">Tu carrito está vacío</p>
+      <p *ngIf="cartItems().length > 0">{{ cartItems().length }} productos en tu carrito</p>
+      <p *ngIf="cartItems().length === 0">Tu carrito está vacío</p>
     </div>
   </div>
 
   <div class="container">
     <!-- Empty Cart -->
-    <div class="empty-cart" *ngIf="cartItems.length === 0">
+    <div class="empty-cart" *ngIf="cartItems().length === 0">
       <mat-icon>shopping_cart</mat-icon>
       <h2>Tu carrito está vacío</h2>
       <p>Agrega algunos productos increíbles a tu carrito</p>
@@ -20,16 +20,16 @@
     </div>
 
     <!-- Cart Items -->
-    <div class="cart-content" *ngIf="cartItems.length > 0">
+    <div class="cart-content" *ngIf="cartItems().length > 0">
       <div class="cart-items">
-        <mat-card class="cart-item" *ngFor="let item of cartItems">
+        <mat-card class="cart-item" *ngFor="let item of cartItems()">
           <div class="item-image">
-            <img [src]="item.image" [alt]="item.name" [title]="item.name">
+            <img [src]="item.product.image" [alt]="item.product.name" [title]="item.product.name">
           </div>
 
           <div class="item-details">
-            <h3>{{ item.name }}</h3>
-            <p class="item-price">${{ item.price }}</p>
+            <h3>{{ item.product.name }}</h3>
+            <p class="item-price">${{ item.product.price }}</p>
           </div>
 
           <div class="quantity-controls">
@@ -48,7 +48,7 @@
           </div>
 
           <div class="item-actions">
-            <button mat-icon-button color="warn" (click)="removeItem(item.id)"
+            <button mat-icon-button color="warn" (click)="removeItem(item.product.id)">
                     aria-label="Eliminar producto">
               <mat-icon>delete</mat-icon>
             </button>
@@ -102,7 +102,7 @@
     </div>
 
     <!-- Continue Shopping -->
-    <div class="continue-shopping" *ngIf="cartItems.length > 0">
+    <div class="continue-shopping" *ngIf="cartItems().length > 0">
       <button mat-button routerLink="/products">
         <mat-icon>arrow_back</mat-icon>
         Continuar comprando

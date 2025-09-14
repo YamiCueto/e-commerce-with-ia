@@ -17,7 +17,7 @@
       <button mat-icon-button>
         <mat-icon>favorite_border</mat-icon>
       </button>
-      <button mat-icon-button [matBadge]="cartItems" matBadgeColor="warn" routerLink="/cart">
+      <button mat-icon-button [matBadge]="cartItems()" matBadgeColor="warn" routerLink="/cart">
         <mat-icon>shopping_cart</mat-icon>
       </button>
       <button mat-icon-button>
@@ -63,3 +63,5 @@
   </div>
 </footer>
 
+<!-- Notifications Toast Container -->
+<app-notifications></app-notifications>

@@ -1,0 +1,300 @@
+.checkout-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: calc(100vh - 120px);
+}
+
+.checkout-card {
+  margin-bottom: 20px;
+}
+
+.checkout-card mat-card-header {
+  margin-bottom: 20px;
+}
+
+.checkout-card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+}
+
+.checkout-card mat-card-subtitle {
+  margin-top: 8px;
+  color: #666;
+}
+
+/* Order Summary */
+.order-summary {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.order-summary h3 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-weight: 500;
+}
+
+.order-items {
+  margin-bottom: 16px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.order-item:last-child {
+  border-bottom: none;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.item-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.item-quantity {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 4px;
+}
+
+.item-price {
+  font-weight: 500;
+  color: #1976d2;
+}
+
+.order-totals {
+  padding-top: 16px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.total-final {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1976d2;
+  border-top: 2px solid #e0e0e0;
+  padding-top: 12px;
+  margin-top: 8px;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 24px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.form-section mat-expansion-panel-header {
+  height: 60px;
+}
+
+.form-section mat-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+}
+
+.form-section mat-panel-title mat-icon {
+  color: #1976d2;
+}
+
+.shipping-form,
+.payment-form {
+  padding: 16px 0;
+}
+
+/* Form Layout */
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  flex: 1;
+}
+
+.third-width {
+  flex: 1;
+}
+
+.two-thirds {
+  flex: 2;
+}
+
+mat-form-field {
+  display: block;
+}
+
+/* Card Details */
+.card-details {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 16px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Alternative Payment Methods */
+.alternative-payment {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #e3f2fd;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+  border: 1px solid #bbdefb;
+}
+
+.alternative-payment mat-icon {
+  color: #1976d2;
+}
+
+.alternative-payment p {
+  margin: 0;
+  color: #1565c0;
+}
+
+/* Terms Section */
+.terms-section {
+  margin: 24px 0;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.terms-section mat-checkbox {
+  font-size: 0.9rem;
+}
+
+.terms-section a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.terms-section a:hover {
+  text-decoration: underline;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 2px solid #e0e0e0;
+}
+
+.checkout-button {
+  min-width: 200px;
+  height: 48px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.checkout-button mat-icon {
+  margin-right: 8px;
+}
+
+.checkout-button:disabled {
+  opacity: 0.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .checkout-container {
+    padding: 12px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .action-buttons button {
+    width: 100%;
+  }
+
+  .order-summary {
+    padding: 16px;
+  }
+
+  .card-details,
+  .alternative-payment {
+    padding: 12px;
+  }
+}
+
+/* Loading State */
+.processing {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* Error States */
+mat-form-field.mat-form-field-invalid mat-label {
+  color: #f44336;
+}
+
+mat-error {
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+/* Success States */
+.payment-success {
+  background: #e8f5e8;
+  border: 1px solid #4caf50;
+  color: #2e7d32;
+}
+
+/* Security Badge */
+.security-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #4caf50;
+  font-size: 0.9rem;
+  margin-top: 12px;
+}
+
+.security-badge mat-icon {
+  font-size: 1.2rem;
+}

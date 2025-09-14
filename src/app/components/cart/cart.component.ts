@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '../../shared/material.module';
 import { CommonModule } from '@angular/common';
+import { CartService } from '../../services/cart.service';
 
 export interface CartItem {
   id: number;
@@ -20,62 +21,48 @@ export interface CartItem {
   styleUrl: './cart.component.css'
 })
 export class CartComponent {
-  protected cartItems: CartItem[] = [
-    {
-      id: 1,
-      name: 'Smartphone Pro Max',
-      price: 999.99,
-      quantity: 1,
-      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=150&h=150&fit=crop',
-      total: 999.99
-    },
-    {
-      id: 3,
-      name: 'Auriculares Wireless',
-      price: 199.99,
-      quantity: 2,
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150&h=150&fit=crop',
-      total: 399.98
-    }
-  ];
+  private router = inject(Router);
+  private cartService = inject(CartService);
+
+  protected cartItems = this.cartService.items;
+  protected cartSummary = this.cartService.getCartSummary();
 
   protected get subtotal(): number {
-    return this.cartItems.reduce((sum, item) => sum + item.total, 0);
+    return this.cartSummary.subtotal;
   }
 
   protected get tax(): number {
-    return this.subtotal * 0.15; // 15% tax
+    return this.cartSummary.tax;
   }
 
   protected get shipping(): number {
-    return this.subtotal > 100 ? 0 : 9.99;
+    return this.cartSummary.shipping;
   }
 
   protected get total(): number {
-    return this.subtotal + this.tax + this.shipping;
+    return this.cartSummary.total;
   }
 
-  protected updateQuantity(item: CartItem, change: number) {
-    const newQuantity = item.quantity + change;
-    if (newQuantity > 0) {
-      item.quantity = newQuantity;
-      item.total = item.price * item.quantity;
+  protected updateQuantity(item: any, change: number) {
+    if (change > 0) {
+      this.cartService.addToCart(item.product);
+    } else {
+      this.cartService.removeFromCart(item.product.id);
     }
   }
 
   protected removeItem(itemId: number) {
-    this.cartItems = this.cartItems.filter(item => item.id !== itemId);
+    this.cartService.removeFromCart(itemId);
   }
 
   protected clearCart() {
-    this.cartItems = [];
+    this.cartService.clearCart();
   }
 
   protected proceedToCheckout() {
-    // TODO: Implement checkout logic
-    console.log('Proceeding to checkout...', {
-      items: this.cartItems,
-      total: this.total
-    });
+    if (this.cartItems().length === 0) {
+      return;
+    }
+    this.router.navigate(['/checkout']);
   }
 }
