@@ -1,0 +1,307 @@
+[
+  {
+    "id": 1,
+    "name": "iPhone 15 Pro Max",
+    "price": 1199.99,
+    "originalPrice": 1299.99,
+    "category": "electronics",
+    "brand": "Apple",
+    "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&h=500&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1520923387722-0a5ef9963e33?w=500&h=500&fit=crop"
+    ],
+    "rating": 4.8,
+    "reviews": 342,
+    "description": "El iPhone más avanzado con chip A17 Pro, sistema de cámaras profesional y diseño de titanio. Incluye todas las funciones Pro para usuarios exigentes.",
+    "features": [
+      "Pantalla Super Retina XDR de 6.7 pulgadas",
+      "Chip A17 Pro con GPU de 6 núcleos",
+      "Sistema de cámaras Pro con zoom óptico 5x",
+      "Batería que dura todo el día",
+      "Diseño resistente con titanio",
+      "Conector USB-C"
+    ],
+    "specifications": {
+      "Pantalla": "6.7″ Super Retina XDR OLED",
+      "Procesador": "A17 Pro chip",
+      "Almacenamiento": "256GB",
+      "RAM": "8GB",
+      "Cámara principal": "48MP",
+      "Cámara frontal": "12MP TrueDepth",
+      "Batería": "4422 mAh",
+      "Sistema operativo": "iOS 17",
+      "Conectividad": "5G, Wi-Fi 6E, Bluetooth 5.3",
+      "Peso": "221g"
+    },
+    "inStock": true,
+    "stockCount": 25,
+    "tags": ["nuevo", "popular", "oferta"],
+    "warranty": "1 año de garantía Apple"
+  },
+  {
+    "id": 2,
+    "name": "MacBook Pro 16\" M3 Pro",
+    "price": 2499.99,
+    "originalPrice": 2699.99,
+    "category": "electronics",
+    "brand": "Apple",
+    "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&h=500&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&h=500&fit=crop"
+    ],
+    "rating": 4.9,
+    "reviews": 198,
+    "description": "MacBook Pro con chip M3 Pro para profesionales creativos. Rendimiento excepcional para edición de video, desarrollo y diseño.",
+    "features": [
+      "Chip M3 Pro con CPU de 12 núcleos",
+      "GPU de 18 núcleos",
+      "32GB de memoria unificada",
+      "Pantalla Liquid Retina XDR de 16.2 pulgadas",
+      "Hasta 22 horas de batería",
+      "Sistema de sonido de 6 altavoces"
+    ],
+    "specifications": {
+      "Pantalla": "16.2″ Liquid Retina XDR",
+      "Procesador": "Apple M3 Pro",
+      "RAM": "32GB unificada",
+      "Almacenamiento": "1TB SSD",
+      "GPU": "18 núcleos",
+      "Puertos": "3x Thunderbolt 4, HDMI, SD",
+      "Batería": "Hasta 22 horas",
+      "Sistema operativo": "macOS Sonoma",
+      "Peso": "2.16kg"
+    },
+    "inStock": true,
+    "stockCount": 12,
+    "tags": ["profesional", "creativo", "potente"],
+    "warranty": "1 año de garantía Apple"
+  },
+  {
+    "id": 3,
+    "name": "Sony WH-1000XM5",
+    "price": 349.99,
+    "originalPrice": 399.99,
+    "category": "electronics",
+    "brand": "Sony",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&h=500&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&h=500&fit=crop"
+    ],
+    "rating": 4.6,
+    "reviews": 523,
+    "description": "Auriculares premium con la mejor cancelación de ruido del mercado. Perfectos para viajes, trabajo y entretenimiento.",
+    "features": [
+      "Cancelación de ruido líder en la industria",
+      "30 horas de batería",
+      "Carga rápida: 3 minutos = 3 horas",
+      "Audio de alta resolución",
+      "Controles táctiles intuitivos",
+      "Micrófono con supresión de ruido"
+    ],
+    "specifications": {
+      "Tipo": "Circumaurales inalámbricos",
+      "Cancelación de ruido": "Sí, híbrida",
+      "Batería": "30 horas con ANC",
+      "Carga": "USB-C, carga rápida",
+      "Conectividad": "Bluetooth 5.2, NFC",
+      "Peso": "250g",
+      "Respuesta de frecuencia": "4Hz-40,000Hz",
+      "Códecs": "LDAC, SBC, AAC"
+    },
+    "inStock": true,
+    "stockCount": 45,
+    "tags": ["inalámbrico", "noise-cancelling", "premium"],
+    "warranty": "2 años de garantía Sony"
+  },
+  {
+    "id": 4,
+    "name": "Apple Watch Series 9",
+    "price": 429.99,
+    "originalPrice": 459.99,
+    "category": "electronics",
+    "brand": "Apple",
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=500&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&h=500&fit=crop"
+    ],
+    "rating": 4.7,
+    "reviews": 289,
+    "description": "El Apple Watch más avanzado con chip S9, pantalla más brillante y nuevas funciones de salud.",
+    "features": [
+      "Chip S9 con Neural Engine de 4 núcleos",
+      "Pantalla Always-On más brillante",
+      "Gesto de doble toque",
+      "Monitoreo de salud avanzado",
+      "Resistente al agua hasta 50m",
+      "GPS de doble frecuencia"
+    ],
+    "specifications": {
+      "Tamaño": "45mm",
+      "Pantalla": "Always-On Retina OLED",
+      "Procesador": "S9 SiP",
+      "Almacenamiento": "64GB",
+      "Conectividad": "GPS + Cellular",
+      "Resistencia": "WR50, IP6X",
+      "Batería": "Hasta 18 horas",
+      "Sistema": "watchOS 10"
+    },
+    "inStock": true,
+    "stockCount": 33,
+    "tags": ["smartwatch", "salud", "fitness"],
+    "warranty": "1 año de garantía Apple"
+  },
+  {
+    "id": 5,
+    "name": "Samsung Galaxy S24 Ultra",
+    "price": 1299.99,
+    "originalPrice": 1399.99,
+    "category": "electronics",
+    "brand": "Samsung",
+    "image": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&h=500&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&h=500&fit=crop"
+    ],
+    "rating": 4.5,
+    "reviews": 412,
+    "description": "El smartphone Android más potente con S Pen integrado, cámaras profesionales y funciones de IA avanzadas.",
+    "features": [
+      "Pantalla Dynamic AMOLED 2X de 6.8 pulgadas",
+      "Procesador Snapdragon 8 Gen 3",
+      "Cámara principal de 200MP",
+      "S Pen integrado",
+      "Batería de 5000mAh",
+      "IA Galaxy para productividad"
+    ],
+    "specifications": {
+      "Pantalla": "6.8″ Dynamic AMOLED 2X",
+      "Procesador": "Snapdragon 8 Gen 3",
+      "RAM": "12GB",
+      "Almacenamiento": "256GB",
+      "Cámara": "200MP + 50MP + 12MP + 10MP",
+      "Batería": "5000mAh",
+      "Sistema": "Android 14 con One UI 6.1",
+      "5G": "Sí"
+    },
+    "inStock": true,
+    "stockCount": 18,
+    "tags": ["android", "s-pen", "cámara-pro"],
+    "warranty": "1 año de garantía Samsung"
+  },
+  {
+    "id": 6,
+    "name": "Camiseta Básica Premium",
+    "price": 29.99,
+    "originalPrice": 39.99,
+    "category": "clothing",
+    "brand": "Essential Wear",
+    "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=500&h=500&fit=crop"
+    ],
+    "rating": 4.3,
+    "reviews": 156,
+    "description": "Camiseta básica de algodón 100% orgánico. Perfecta para el día a día con ajuste cómodo y telas de alta calidad.",
+    "features": [
+      "100% algodón orgánico",
+      "Corte clásico unisex",
+      "Cuello reforzado",
+      "Costuras dobles en hombros",
+      "Pre-encogida",
+      "Disponible en múltiples colores"
+    ],
+    "specifications": {
+      "Material": "100% Algodón orgánico",
+      "Peso de tela": "180 GSM",
+      "Tipo de corte": "Regular fit",
+      "Cuello": "Cuello redondo",
+      "Mangas": "Manga corta",
+      "Cuidado": "Lavable a máquina 30°C",
+      "Tallas": "XS, S, M, L, XL, XXL",
+      "Colores": "Blanco, Negro, Azul marino, Gris"
+    },
+    "inStock": true,
+    "stockCount": 120,
+    "tags": ["básico", "algodón-orgánico", "unisex"],
+    "warranty": "Garantía de satisfacción 30 días"
+  },
+  {
+    "id": 7,
+    "name": "Silla Ergonómica de Oficina",
+    "price": 249.99,
+    "originalPrice": 299.99,
+    "category": "home",
+    "brand": "ComfortWork",
+    "image": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&h=500&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&h=500&fit=crop"
+    ],
+    "rating": 4.4,
+    "reviews": 89,
+    "description": "Silla de oficina ergonómica con soporte lumbar ajustable. Diseñada para largas jornadas de trabajo con máximo confort.",
+    "features": [
+      "Soporte lumbar ajustable",
+      "Reposabrazos regulables en altura",
+      "Respaldo reclinable hasta 135°",
+      "Base de 5 ruedas con freno",
+      "Tejido transpirable",
+      "Regulación de altura neumática"
+    ],
+    "specifications": {
+      "Material": "Malla transpirable y espuma HR",
+      "Base": "Nylon reforzado con ruedas",
+      "Regulación altura": "42-52cm",
+      "Peso máximo": "120kg",
+      "Dimensiones": "65x65x100-110cm",
+      "Reclinación": "90°-135°",
+      "Garantía": "5 años estructura",
+      "Color": "Negro con detalles grises"
+    },
+    "inStock": true,
+    "stockCount": 15,
+    "tags": ["ergonómica", "oficina", "confort"],
+    "warranty": "5 años en estructura, 2 años en componentes"
+  },
+  {
+    "id": 8,
+    "name": "Pelota de Fútbol Profesional",
+    "price": 89.99,
+    "originalPrice": 109.99,
+    "category": "sports",
+    "brand": "SportPro",
+    "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&h=500&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&h=500&fit=crop"
+    ],
+    "rating": 4.6,
+    "reviews": 234,
+    "description": "Pelota de fútbol oficial FIFA Quality Pro. Usada en competencias profesionales con tecnología de última generación.",
+    "features": [
+      "Certificación FIFA Quality Pro",
+      "32 paneles termosellados",
+      "Vejiga de látex natural",
+      "Resistente al agua",
+      "Vuelo estable y predecible",
+      "Diseño aerodinámico"
+    ],
+    "specifications": {
+      "Talla": "5 (oficial)",
+      "Peso": "410-450g",
+      "Circunferencia": "68-70cm",
+      "Material": "Cuero sintético PU",
+      "Construcción": "32 paneles termosellados",
+      "Vejiga": "Látex natural",
+      "Certificación": "FIFA Quality Pro",
+      "Uso": "Profesional/Competición"
+    },
+    "inStock": true,
+    "stockCount": 67,
+    "tags": ["fifa", "profesional", "fútbol"],
+    "warranty": "1 año contra defectos de fabricación"
+  }
+]

@@ -22,8 +22,8 @@
         <mat-form-field appearance="outline">
           <mat-label>Categoría</mat-label>
           <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryChange()">
-            <mat-option *ngFor="let category of categories" [value]="category.value">
-              {{ category.label }}
+            <mat-option *ngFor="let category of categories" [value]="category.id">
+              {{ category.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>

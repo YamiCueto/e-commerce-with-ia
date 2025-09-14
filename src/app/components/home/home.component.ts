@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../shared/material.module';
 import { CommonModule } from '@angular/common';
+import { ProductService, Product, Category } from '../../services/product.service';
 
 @Component({
   selector: 'app-home',
@@ -10,68 +11,42 @@ import { CommonModule } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
-  protected categories = [
-    {
-      id: 'electronics',
-      name: 'Electrónicos',
-      icon: 'devices',
-      image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=300&h=200&fit=crop'
-    },
-    {
-      id: 'clothing',
-      name: 'Ropa',
-      icon: 'checkroom',
-      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=300&h=200&fit=crop'
-    },
-    {
-      id: 'home',
-      name: 'Hogar',
-      icon: 'home',
-      image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=200&fit=crop'
-    },
-    {
-      id: 'sports',
-      name: 'Deportes',
-      icon: 'sports_soccer',
-      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop'
-    }
-  ];
+export class HomeComponent implements OnInit {
+  private productService = inject(ProductService);
 
-  protected featuredProducts = [
-    {
-      id: 1,
-      name: 'Smartphone Pro Max',
-      price: 999.99,
-      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&h=300&fit=crop',
-      rating: 4.5,
-      reviews: 128
-    },
-    {
-      id: 2,
-      name: 'Laptop Gaming',
-      price: 1299.99,
-      image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&h=300&fit=crop',
-      rating: 4.8,
-      reviews: 89
-    },
-    {
-      id: 3,
-      name: 'Auriculares Wireless',
-      price: 199.99,
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop',
-      rating: 4.3,
-      reviews: 256
-    },
-    {
-      id: 4,
-      name: 'Smartwatch',
-      price: 399.99,
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop',
-      rating: 4.6,
-      reviews: 167
-    }
-  ];
+  protected categories: Category[] = [];
+  protected featuredProducts: Product[] = [];
+  protected loading = true;
+
+  ngOnInit() {
+    this.loadData();
+  }
+
+  private loadData() {
+    this.loading = true;
+
+    // Cargar categorías
+    this.productService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (error) => {
+        console.error('Error loading categories:', error);
+      }
+    });
+
+    // Cargar productos destacados
+    this.productService.getFeaturedProducts(4).subscribe({
+      next: (products) => {
+        this.featuredProducts = products;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading featured products:', error);
+        this.loading = false;
+      }
+    });
+  }
 
   protected getStars(rating: number): string[] {
     const fullStars = Math.floor(rating);

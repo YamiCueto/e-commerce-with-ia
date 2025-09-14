@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MaterialModule } from '../../shared/material.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ProductService, Product, Category } from '../../services/product.service';
 
 @Component({
   selector: 'app-products',
@@ -12,91 +13,65 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit {
-  protected products = [
-    {
-      id: 1,
-      name: 'Smartphone Pro Max',
-      price: 999.99,
-      category: 'electronics',
-      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&h=300&fit=crop',
-      rating: 4.5,
-      reviews: 128,
-      description: 'El smartphone más avanzado con tecnología de punta'
-    },
-    {
-      id: 2,
-      name: 'Laptop Gaming',
-      price: 1299.99,
-      category: 'electronics',
-      image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&h=300&fit=crop',
-      rating: 4.8,
-      reviews: 89,
-      description: 'Laptop para gaming de alto rendimiento'
-    },
-    {
-      id: 3,
-      name: 'Auriculares Wireless',
-      price: 199.99,
-      category: 'electronics',
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop',
-      rating: 4.3,
-      reviews: 256,
-      description: 'Auriculares inalámbricos con cancelación de ruido'
-    },
-    {
-      id: 4,
-      name: 'Smartwatch',
-      price: 399.99,
-      category: 'electronics',
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop',
-      rating: 4.6,
-      reviews: 167,
-      description: 'Reloj inteligente con monitor de salud'
-    },
-    {
-      id: 5,
-      name: 'Tablet Pro',
-      price: 799.99,
-      category: 'electronics',
-      image: 'https://images.unsplash.com/photo-1561154464-82e9adf32764?w=300&h=300&fit=crop',
-      rating: 4.4,
-      reviews: 92,
-      description: 'Tablet profesional para trabajo y entretenimiento'
-    },
-    {
-      id: 6,
-      name: 'Cámara Mirrorless',
-      price: 1599.99,
-      category: 'electronics',
-      image: 'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=300&h=300&fit=crop',
-      rating: 4.7,
-      reviews: 143,
-      description: 'Cámara profesional sin espejo con lentes intercambiables'
-    }
-  ];
+  private route = inject(ActivatedRoute);
+  private productService = inject(ProductService);
 
-  protected filteredProducts = this.products;
+  protected allProducts: Product[] = [];
+  protected filteredProducts: Product[] = [];
+  protected categories: Category[] = [];
   protected searchTerm = '';
   protected selectedCategory = 'all';
-  protected sortBy = 'name';
-
-  protected categories = [
-    { value: 'all', label: 'Todas las categorías' },
-    { value: 'electronics', label: 'Electrónicos' },
-    { value: 'clothing', label: 'Ropa' },
-    { value: 'home', label: 'Hogar' },
-    { value: 'sports', label: 'Deportes' }
-  ];
+  protected sortBy = 'name-asc';
+  protected loading = true;
 
   protected sortOptions = [
-    { value: 'name', label: 'Nombre' },
-    { value: 'price-low', label: 'Precio: Menor a Mayor' },
-    { value: 'price-high', label: 'Precio: Mayor a Menor' },
-    { value: 'rating', label: 'Mejor valorados' }
+    { value: 'name-asc', label: 'Nombre A-Z' },
+    { value: 'name-desc', label: 'Nombre Z-A' },
+    { value: 'price-asc', label: 'Precio: Menor a Mayor' },
+    { value: 'price-desc', label: 'Precio: Mayor a Menor' },
+    { value: 'rating', label: 'Mejor Valorados' }
   ];
 
   ngOnInit() {
-    this.filterProducts();
+    this.loadCategories();
+    this.loadProducts();
+
+    // Verificar si hay una categoría especificada en la ruta
+    this.route.params.subscribe(params => {
+      if (params['category']) {
+        this.selectedCategory = params['category'];
+        this.filterProducts();
+      }
+    });
+  }
+
+  private loadCategories() {
+    this.productService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = [
+          { id: 'all', name: 'Todas las categorías', icon: 'apps', image: '' },
+          ...categories
+        ];
+      },
+      error: (error) => {
+        console.error('Error loading categories:', error);
+      }
+    });
+  }
+
+  private loadProducts() {
+    this.loading = true;
+    this.productService.getAllProducts().subscribe({
+      next: (products) => {
+        this.allProducts = products;
+        this.filterProducts();
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading products:', error);
+        this.loading = false;
+      }
+    });
   }
 
   protected onSearchChange() {
@@ -108,32 +83,20 @@ export class ProductsComponent implements OnInit {
   }
 
   protected onSortChange() {
-    this.sortProducts();
+    this.filterProducts();
   }
 
   private filterProducts() {
-    this.filteredProducts = this.products.filter(product => {
-      const matchesSearch = product.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-                           product.description.toLowerCase().includes(this.searchTerm.toLowerCase());
-      const matchesCategory = this.selectedCategory === 'all' || product.category === this.selectedCategory;
-      return matchesSearch && matchesCategory;
-    });
-    this.sortProducts();
-  }
-
-  private sortProducts() {
-    this.filteredProducts.sort((a, b) => {
-      switch (this.sortBy) {
-        case 'name':
-          return a.name.localeCompare(b.name);
-        case 'price-low':
-          return a.price - b.price;
-        case 'price-high':
-          return b.price - a.price;
-        case 'rating':
-          return b.rating - a.rating;
-        default:
-          return 0;
+    this.productService.getFilteredProducts(
+      this.selectedCategory,
+      this.searchTerm,
+      this.sortBy
+    ).subscribe({
+      next: (products) => {
+        this.filteredProducts = products;
+      },
+      error: (error) => {
+        console.error('Error filtering products:', error);
       }
     });
   }

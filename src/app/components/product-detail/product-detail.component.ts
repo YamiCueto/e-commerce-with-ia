@@ -1,23 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MaterialModule } from '../../shared/material.module';
 import { CommonModule } from '@angular/common';
+import { ProductService, Product } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
 
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  category: string;
-  image: string;
-  images: string[];
-  rating: number;
-  reviews: number;
-  description: string;
-  features: string[];
-  specifications: { [key: string]: string };
-  inStock: boolean;
-  stockCount: number;
-}
 
 @Component({
   selector: 'app-product-detail',
@@ -27,60 +14,43 @@ export interface Product {
   styleUrl: './product-detail.component.css'
 })
 export class ProductDetailComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private productService = inject(ProductService);
+  private cartService = inject(CartService);
+
   protected product: Product | null = null;
   protected selectedImage = 0;
   protected quantity = 1;
-
-  // Mock data - in real app, this would come from a service
-  private mockProducts: Product[] = [
-    {
-      id: 1,
-      name: 'Smartphone Pro Max',
-      price: 999.99,
-      category: 'electronics',
-      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&h=500&fit=crop',
-      images: [
-        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&h=500&fit=crop',
-        'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&h=500&fit=crop',
-        'https://images.unsplash.com/photo-1520923387722-0a5ef9963e33?w=500&h=500&fit=crop'
-      ],
-      rating: 4.5,
-      reviews: 128,
-      description: 'El smartphone más avanzado con tecnología de punta, diseño elegante y rendimiento excepcional. Perfecto para usuarios que buscan la mejor experiencia móvil.',
-      features: [
-        'Pantalla OLED de 6.7 pulgadas',
-        'Procesador A17 Pro',
-        'Sistema de cámaras triple',
-        'Batería de larga duración',
-        'Resistente al agua IP68',
-        '5G Ultra-rápido'
-      ],
-      specifications: {
-        'Pantalla': '6.7" Super Retina XDR OLED',
-        'Procesador': 'A17 Pro chip',
-        'Memoria': '256GB',
-        'RAM': '8GB',
-        'Cámara': '48MP + 12MP + 12MP',
-        'Batería': '4422 mAh',
-        'OS': 'iOS 17'
-      },
-      inStock: true,
-      stockCount: 15
-    }
-  ];
-
-  constructor(private route: ActivatedRoute) {}
+  protected loading = true;
+  protected notFound = false;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      const productId = parseInt(params['id']);
+      const productId = +params['id'];
       this.loadProduct(productId);
     });
   }
 
   private loadProduct(id: number) {
-    // In real app, this would be a service call
-    this.product = this.mockProducts.find(p => p.id === id) || null;
+    this.loading = true;
+    this.notFound = false;
+
+    this.productService.getProductById(id).subscribe({
+      next: (product) => {
+        if (product) {
+          this.product = product;
+          this.selectedImage = 0;
+        } else {
+          this.notFound = true;
+        }
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading product:', error);
+        this.notFound = true;
+        this.loading = false;
+      }
+    });
   }
 
   protected selectImage(index: number) {
@@ -96,21 +66,18 @@ export class ProductDetailComponent implements OnInit {
 
   protected addToCart() {
     if (this.product) {
-      // TODO: Implement cart service
-      console.log('Adding to cart:', {
-        product: this.product,
-        quantity: this.quantity
-      });
+      this.cartService.addToCart(this.product, this.quantity);
+      // Resetear cantidad después de agregar al carrito
+      this.quantity = 1;
     }
   }
 
   protected buyNow() {
     if (this.product) {
-      // TODO: Implement buy now logic
-      console.log('Buy now:', {
-        product: this.product,
-        quantity: this.quantity
-      });
+      // Agregar al carrito y navegar al checkout
+      this.cartService.addToCart(this.product, this.quantity);
+      // TODO: Implement navigation to checkout
+      console.log('Navegando al checkout...');
     }
   }
 
@@ -133,5 +100,12 @@ export class ProductDetailComponent implements OnInit {
     }
 
     return stars;
+  }
+
+  protected getDiscountPercentage(): number {
+    if (this.product && this.product.originalPrice && this.product.originalPrice > this.product.price) {
+      return Math.round(((this.product.originalPrice - this.product.price) / this.product.originalPrice) * 100);
+    }
+    return 0;
   }
 }

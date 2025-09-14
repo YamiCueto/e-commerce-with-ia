@@ -1,0 +1,35 @@
+{
+  "app": {
+    "name": "TechStore IA",
+    "version": "1.0.0",
+    "description": "Tu tienda online con inteligencia artificial",
+    "author": "YamiCueto",
+    "contact": {
+      "email": "info@techstore.com",
+      "phone": "(555) 123-4567",
+      "address": "123 Tech Street, Digital City"
+    }
+  },
+  "settings": {
+    "currency": "USD",
+    "tax_rate": 0.15,
+    "free_shipping_minimum": 100,
+    "shipping_cost": 9.99,
+    "items_per_page": 12,
+    "featured_products_count": 4
+  },
+  "features": {
+    "ai_recommendations": true,
+    "real_time_inventory": true,
+    "wishlist": true,
+    "reviews": true,
+    "chat_support": false,
+    "multi_language": false
+  },
+  "social_media": {
+    "facebook": "https://facebook.com/techstore",
+    "twitter": "https://twitter.com/techstore",
+    "instagram": "https://instagram.com/techstore",
+    "linkedin": "https://linkedin.com/company/techstore"
+  }
+}
