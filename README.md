@@ -1,38 +1,88 @@
-# ECommerceWithIa
+# TechStore IA - E-commerce con Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.0.
+Una aplicación de comercio electrónico moderna desarrollada con Angular 20, Angular Material y diseño responsive.
 
-## Development server
+🚀 **[Ver aplicación en vivo](https://yamicueto.github.io/e-commerce-with-ia/)**
 
-To start a local development server, run:
+## ✨ Características
 
+- 🛒 **Carrito de compras** completo con persistencia en localStorage
+- 💳 **Proceso de checkout** con simulación de pagos
+- 🔔 **Sistema de notificaciones** en tiempo real
+- 📱 **Diseño responsive** que funciona en todos los dispositivos
+- 🎨 **Material Design** con tema personalizado
+- ⚡ **Angular Signals** para manejo reactivo del estado
+- 🚀 **Lazy loading** para optimización de performance
+
+## 🛠️ Tecnologías
+
+- **Angular 20** - Framework principal
+- **Angular Material** - Componentes de UI
+- **TypeScript** - Lenguaje de programación
+- **RxJS** - Programación reactiva
+- **Angular Router** - Navegación
+- **GitHub Actions** - CI/CD
+- **GitHub Pages** - Hosting
+
+## 🚀 Inicio rápido
+
+### Prerrequisitos
+- Node.js 18+ 
+- npm o yarn
+
+### Instalación
+
+1. Clona el repositorio:
 ```bash
-ng serve
+git clone https://github.com/YamiCueto/e-commerce-with-ia.git
+cd e-commerce-with-ia
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+2. Instala las dependencias:
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+3. Inicia el servidor de desarrollo:
 ```bash
-ng generate --help
+npm start
 ```
 
-## Building
+4. Abre tu navegador en `http://localhost:4200`
 
-To build the project run:
+## 📦 Scripts disponibles
 
-```bash
-ng build
+- `npm start` - Inicia el servidor de desarrollo
+- `npm run build` - Build para desarrollo
+- `npm run build:prod` - Build optimizado para producción
+- `npm run build:github-pages` - Build para GitHub Pages
+- `npm test` - Ejecuta las pruebas unitarias
+
+## 🏗️ Estructura del proyecto
+
 ```
+src/
+├── app/
+│   ├── components/          # Componentes de la aplicación
+│   │   ├── cart/           # Carrito de compras
+│   │   ├── checkout/       # Proceso de pago
+│   │   ├── home/           # Página principal
+│   │   ├── products/       # Lista de productos
+│   │   └── ...
+│   ├── services/           # Servicios de la aplicación
+│   │   ├── cart.service.ts # Gestión del carrito
+│   │   ├── product.service.ts # Gestión de productos
+│   │   └── ...
+│   └── shared/             # Componentes y módulos compartidos
+├── assets/                 # Recursos estáticos
+└── ...
+```
+
+## 🚀 Deployment
+
+La aplicación se despliega automáticamente en GitHub Pages mediante GitHub Actions cuando se hace push a la rama `main`.
+
+URL de producción: https://yamicueto.github.io/e-commerce-with-ia/
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 

@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --configuration production",
+    "build:github-pages": "ng build --configuration production --base-href /e-commerce-with-ia/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
