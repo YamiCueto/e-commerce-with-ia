@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterModule } from '@angular/router';
 import { MaterialModule } from './shared/material.module';
 import { CommonModule } from '@angular/common';
 import { CartService } from './services/cart.service';
@@ -7,7 +7,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MaterialModule, CommonModule, NotificationsComponent],
+  imports: [RouterOutlet, RouterModule, MaterialModule, CommonModule, NotificationsComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

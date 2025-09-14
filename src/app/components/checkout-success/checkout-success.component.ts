@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
             </div>
             <div class="detail-row">
               <span class="label">Total pagado:</span>
-              <span class="value total-amount">\${{ total?.toFixed(2) }}</span>
+              <span class="value total-amount">\${{ total.toFixed(2) }}</span>
             </div>
             <div class="detail-row">
               <span class="label">Fecha:</span>
@@ -219,20 +219,25 @@ export class CheckoutSuccessComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  orderId: string | null = null;
-  total: number | null = null;
+  orderId!: string;
+  total!: number;
   currentDate = new Date();
 
   ngOnInit() {
     // Get query parameters
-    this.orderId = this.route.snapshot.queryParamMap.get('orderId');
+    const orderIdParam = this.route.snapshot.queryParamMap.get('orderId');
     const totalParam = this.route.snapshot.queryParamMap.get('total');
-    this.total = totalParam ? parseFloat(totalParam) : null;
+    const parsedTotal = totalParam ? parseFloat(totalParam) : null;
 
     // If no order data, redirect to home
-    if (!this.orderId || !this.total) {
+    if (!orderIdParam || !parsedTotal) {
       this.router.navigate(['/']);
+      return;
     }
+
+    // Assign validated values
+    this.orderId = orderIdParam;
+    this.total = parsedTotal;
   }
 
   continueShopping() {
