@@ -48,8 +48,8 @@
           </div>
 
           <div class="item-actions">
-            <button mat-icon-button color="warn" (click)="removeItem(item.product.id)">
-                    aria-label="Eliminar producto">
+            <button mat-icon-button color="warn" (click)="removeItem(item.product.id)"
+                    [attr.aria-label]="'Eliminar ' + item.product.name + ' del carrito'">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
