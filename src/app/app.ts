@@ -14,7 +14,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 export class App implements OnInit {
   private cartService = inject(CartService);
 
-  protected title = 'TechStore IA';
+  protected title = 'YamiStore IA';
   protected cartItems = this.cartService.itemCount;
 
   ngOnInit() {
