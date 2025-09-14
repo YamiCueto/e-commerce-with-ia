@@ -36,7 +36,7 @@ export interface Category {
 export class ProductService {
   private http = inject(HttpClient);
 
-  private readonly ASSETS_PATH = '/assets/data';
+  private readonly ASSETS_PATH = 'assets/data';
 
   /**
    * Obtiene todos los productos
