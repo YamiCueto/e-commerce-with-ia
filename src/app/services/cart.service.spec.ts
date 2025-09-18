@@ -7,6 +7,8 @@ import { Product } from './product.service';
 const mockNotificationService = {
   showCartSuccess: jest.fn(),
   showCartUpdated: jest.fn(),
+  showCartRemoved: jest.fn(),
+  showCartCleared: jest.fn(),
   showWarning: jest.fn(),
   showError: jest.fn()
 };
@@ -54,7 +56,8 @@ describe('CartService', () => {
       expect(service.itemCount()).toBe(0);
       expect(service.subtotal()).toBe(0);
       expect(service.tax()).toBe(0);
-      expect(service.total()).toBe(0);
+      expect(service.shipping()).toBe(9.99);
+      expect(service.total()).toBe(9.99);
     });
   });
 
@@ -185,7 +188,7 @@ describe('CartService', () => {
       expect(service.items()).toHaveLength(0);
       expect(service.itemCount()).toBe(0);
       expect(service.subtotal()).toBe(0);
-      expect(service.total()).toBe(0);
+      expect(service.total()).toBe(9.99); // shipping cost remains
     });
   });
 

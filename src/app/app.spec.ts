@@ -16,13 +16,18 @@ import { NotificationService } from './services/notification.service';
 // Mock services
 const mockCartService = {
   itemCount: jest.fn(() => 0),
-  items: jest.fn(() => [])
+  items: jest.fn(() => []),
+  loadFromStorage: jest.fn()
 };
 
 const mockNotificationService = {
   showSuccess: jest.fn(),
   showError: jest.fn(),
-  showWarning: jest.fn()
+  showWarning: jest.fn(),
+  showCartAdded: jest.fn(),
+  showCartRemoved: jest.fn(),
+  showCartCleared: jest.fn(),
+  getNotifications: jest.fn().mockReturnValue([])
 };
 
 describe('App', () => {
@@ -65,7 +70,7 @@ describe('App', () => {
 
   it('should render title in template', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('TechStore IA');
+    expect(compiled.textContent).toContain('YamiStore IA');
   });
 
   it('should have router outlet', () => {

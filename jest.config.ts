@@ -21,7 +21,7 @@ const config: Config = {
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage',
-  coverageReporters: ['text', 'lcov']
+  coverageReporters: ['text', 'lcov', 'html']
 };
 
 export default config;
