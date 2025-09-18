@@ -24,7 +24,7 @@
       <div class="cart-items">
         <mat-card class="cart-item" *ngFor="let item of cartItems()">
           <div class="item-image">
-            <img [src]="item.product.image" [alt]="item.product.name" [title]="item.product.name">
+            <img [src]="item.product.image" [alt]="item.product.name ? item.product.name : 'Imagen de producto'" [title]="item.product.name ? item.product.name : 'Producto'">
           </div>
 
           <div class="item-details">

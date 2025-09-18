@@ -16,8 +16,9 @@
 
 html {
   font-size: 16px; // Base para rem calculations
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; // Soporte para navegadores basados en WebKit
+  -ms-text-size-adjust: 100%; // Soporte para IE y Edge
+  text-size-adjust: 100%; // Soporte estándar para navegadores modernos
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -329,7 +330,6 @@ img {
 // Scroll horizontal suave
 .scroll-x {
   overflow-x: auto;
-  scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
 
   &::-webkit-scrollbar {
